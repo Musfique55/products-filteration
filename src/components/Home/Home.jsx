@@ -9,6 +9,7 @@ const Home = () => {
     const [selected,setSelected] = useState('');
     const [type,setType] = useState('');
     const [currentPage,setCurrentPage] = useState(1);
+    const[price,setPrice] = useState(1);
     const [values,setValues] = useState('');
     const [suggestions,setSuggestions] = useState([]);
     const {count} = useLoaderData();
@@ -19,16 +20,16 @@ const Home = () => {
     
     useEffect(() => {
         
-        axiosPublic(`/products?page=${currentPage+1}&size=${productPerPage}&type=${type}&category=${selected}`)
+        axiosPublic(`/products?page=${currentPage+1}&size=${productPerPage}&price=${price}&type=${type}&category=${selected}`)
         .then(res => {
             setData(res.data);
         })
 
-    },[axiosPublic,currentPage,selected,type])
+    },[axiosPublic,currentPage,selected,type,price])
 
     useEffect(() => {
         setCurrentPage(0)
-    },[selected])
+    },[selected,price])
 
     useEffect(() => {
         axiosPublic(`/products`)
@@ -72,11 +73,12 @@ const Home = () => {
         })
     }  
     
-    
+    console.log(price);
     return (
         <div>
 
             <div className="mx-20">
+                {/* search suggestions */}
                 <form onChange={handleSuggestion} onSubmit={handleSearch}>
                     <input type="text" placeholder="Search" name="search" className='w-full border  lg:w-[500px] rounded-l-xl p-4 focus:outline-none'/>
                     <button type="submit" className='bg-green-500 p-4 text-white rounded-r-xl'>Search</button>
@@ -93,12 +95,22 @@ const Home = () => {
 
                 <div className="grid grid-cols-4 gap-6 mt-8">
                     <div className="col-span-1 border p-7 rounded-lg">
+
+
+                        {/* price range */}
                         <div>
                             <h3 className="font-semibold text-lg">Price Range</h3>
-                            <input type="range" min="1" max="100" value="50" className="slider" id="myRange"></input>
+                            <input onChange={(e) => setPrice(e.target.value)} value={price} type="range" min="1" max="150"  className="min-slider" id="myRange" ></input>
+                           <div className="flex gap-5">
+                           <input type="text" value={price} className="w-1/2 border focus:outline-none"/>
+                           <input type="text" value={150} className="w-1/2 border focus:outline-none"/>
+                           </div>
                         </div>
+
+                        {/* Brand filtering */}
                         <div>
                             <h3 className="font-semibold text-lg mt-3">Brands</h3>
+
                             {
                                 [...new Set(category.map(d => d.brandName))].map((brandName,idx) => {
                                     return (
@@ -108,6 +120,8 @@ const Home = () => {
                             }
                         </div>
 
+
+                        {/* category filtering */}
                         <div>
                             <h3 className="font-semibold text-lg mt-3">Categories</h3>
                             {
@@ -119,14 +133,22 @@ const Home = () => {
                             }
                         </div>
                     </div>
+                    {/* products */}
                     <div className="col-span-3">
-                    {
+                        <div className="grid grid-cols-4 gap-6">
+                        {
                         data.map((d,idx) => {
                             return (
-                                <p key={idx}>{d.productName}</p>
+                                <div key={idx} className="flex flex-col mb-5 border rounded-lg p-5 text-center items-center space-y-3 cursor-pointer">
+                                    <img src={d.productImage} className="w-[191px] h-[191px] object-cover" alt="perfume" />
+                                    <p className="font-semibold text-lg">{d.productName}</p>
+                                    <p className="font-medium ">{d.price}$</p>
+                                    <p><span className="font-medium">Published:</span> {new Date(d.creationDate).toLocaleDateString()}</p>
+                                </div> 
                             )
                         })
                     }
+                        </div>
                     </div>
                 </div>
 
