@@ -9,7 +9,8 @@ const Home = () => {
     const [selected,setSelected] = useState('');
     const [type,setType] = useState('');
     const [currentPage,setCurrentPage] = useState(1);
-    const[price,setPrice] = useState(1);
+    const [price,setPrice] = useState(1);
+    const [sorted,setSorted] = useState('');
     const [values,setValues] = useState('');
     const [suggestions,setSuggestions] = useState([]);
     const {count} = useLoaderData();
@@ -20,19 +21,19 @@ const Home = () => {
     
     useEffect(() => {
         
-        axiosPublic(`/products?page=${currentPage+1}&size=${productPerPage}&price=${price}&type=${type}&category=${selected}`)
+        axiosPublic(`/products?page=${currentPage+1}&size=${productPerPage}&price=${price}&type=${type}&category=${selected}&sort=${sorted}`)
         .then(res => {
             setData(res.data);
         })
 
-    },[axiosPublic,currentPage,selected,type,price])
+    },[axiosPublic,currentPage,selected,type,price,sorted])
 
     useEffect(() => {
         setCurrentPage(0)
     },[selected,price])
 
     useEffect(() => {
-        axiosPublic(`/products`)
+        axiosPublic(`/allproducts`)
         .then(res => {
             setCategory(res.data);
         })
@@ -73,7 +74,7 @@ const Home = () => {
         })
     }  
     
-    console.log(price);
+    
     return (
         <div>
 
@@ -92,7 +93,18 @@ const Home = () => {
                         </Link>
                         })
                 }
-
+                <div>
+                        <form >
+                        <label htmlFor="sort">Sort By </label>
+                        <select name="sort" onChange={(e) => setSorted(e.target.value)} className="border focus:outline-none">
+                            <option value="" >Default</option>
+                            <option value="pricelow" >Price Low to High</option>
+                            <option value="pricehigh" >Price High to Low</option>
+                            <option value="date" >Newest First</option>
+                        </select>
+                        </form>
+                  
+                </div>
                 <div className="grid grid-cols-4 gap-6 mt-8">
                     <div className="col-span-1 border p-7 rounded-lg">
 
@@ -133,6 +145,8 @@ const Home = () => {
                             }
                         </div>
                     </div>
+
+
                     {/* products */}
                     <div className="col-span-3">
                         <div className="grid grid-cols-4 gap-6">
