@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import AxiosPublic from "../../CustomHooks/AxiosPublic";
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
+import Header from "../Header/Header";
 
 const Home = () => {
     const axiosPublic = AxiosPublic(); 
@@ -10,14 +11,12 @@ const Home = () => {
     const [type,setType] = useState('');
     const [currentPage,setCurrentPage] = useState(1);
     const [price,setPrice] = useState(1);
-    const [sorted,setSorted] = useState('');
-    const [values,setValues] = useState('');
-    const [suggestions,setSuggestions] = useState([]);
+    const [sorted,setSorted] = useState('');    
     const {count} = useLoaderData();
     const productPerPage =  10;
     const totalPage = count / productPerPage;
     const btns = [...Array(totalPage).keys()];
-    const navigate = useNavigate();
+    
     
     useEffect(() => {
         
@@ -52,51 +51,20 @@ const Home = () => {
         }
     }
 
-    const handleSuggestion = (e) => {
-        const search = e.target.value;
-        setValues(search)
-        if(search){
-            axiosPublic.get(`/suggestions?q=${values}`)
-            .then(res => {
-                setSuggestions(res.data)
-            })
-        }else{
-            setValues("");
-        }
-    }
-
-    const handleSearch = (e) => {
-        e.preventDefault();
-        const item = e.target.search.value;
-        axiosPublic.get(`/search?q=${item}`)
-        .then(res => {
-            navigate(`/search/${res.data._id}`)
-        })
-    }  
-    
     
     return (
         <div>
 
-            <div className="mx-20">
+            <div className="mx-5 lg:mx-20">
+                <Header></Header>
                 {/* search suggestions */}
-                <form onChange={handleSuggestion} onSubmit={handleSearch}>
-                    <input type="text" placeholder="Search" name="search" className='w-full border  lg:w-[500px] rounded-l-xl p-4 focus:outline-none'/>
-                    <button type="submit" className='bg-green-500 p-4 text-white rounded-r-xl'>Search</button>
-                </form>
-                {
-                        values && suggestions?.map(({productName,_id}) => {
-                            return <Link  key={_id}>
-                            <div className='bg-white px-5 pt-5' >
-                            <p  className='text-lg font-medium text-black border-b pb-5'>{productName}</p>
-                        </div>
-                        </Link>
-                        })
-                }
-                <div>
+                
+
+                {/* sorting functionality */}
+                <div className="mt-5 text-right">
                         <form >
-                        <label htmlFor="sort">Sort By </label>
-                        <select name="sort" onChange={(e) => setSorted(e.target.value)} className="border focus:outline-none">
+                        <label htmlFor="sort" className="font-medium">Sort By </label>
+                        <select name="sort" onChange={(e) => setSorted(e.target.value)} className="border p-1 focus:outline-none rounded-lg">
                             <option value="" >Default</option>
                             <option value="pricelow" >Price Low to High</option>
                             <option value="pricehigh" >Price High to Low</option>
@@ -105,15 +73,17 @@ const Home = () => {
                         </form>
                   
                 </div>
-                <div className="grid grid-cols-4 gap-6 mt-8">
-                    <div className="col-span-1 border p-7 rounded-lg">
+
+
+                <div className="grid grid-cols-2 gap-6 mt-3 lg:grid-cols-4">
+                    <div className="col-span-2 border p-5 rounded-lg lg:p-7 lg:col-span-1">
 
 
                         {/* price range */}
                         <div>
                             <h3 className="font-semibold text-lg">Price Range</h3>
                             <input onChange={(e) => setPrice(e.target.value)} value={price} type="range" min="1" max="150"  className="min-slider" id="myRange" ></input>
-                           <div className="flex gap-5">
+                           <div className="flex  gap-5 sm:flex-wrap">
                            <input type="text" value={price} className="w-1/2 border focus:outline-none"/>
                            <input type="text" value={150} className="w-1/2 border focus:outline-none"/>
                            </div>
@@ -148,12 +118,12 @@ const Home = () => {
 
 
                     {/* products */}
-                    <div className="col-span-3">
-                        <div className="grid grid-cols-4 gap-6">
+                    <div className=" col-span-2 lg:col-span-3">
+                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 ">
                         {
                         data.map((d,idx) => {
                             return (
-                                <div key={idx} className="flex flex-col mb-5 border rounded-lg p-5 text-center items-center space-y-3 cursor-pointer">
+                                <div key={idx} className="flex flex-col  border rounded-lg p-5 text-center items-center space-y-3 cursor-pointer">
                                     <img src={d.productImage} className="w-[191px] h-[191px] object-cover" alt="perfume" />
                                     <p className="font-semibold text-lg">{d.productName}</p>
                                     <p className="font-medium ">{d.price}$</p>
@@ -172,8 +142,8 @@ const Home = () => {
                 </div>
             </div>
            
-
-            <div className="flex justify-center gap-5">
+            {/* pagination */}
+            <div className="flex justify-center gap-5 mt-10">
                 <button onClick={handlePrev}>Prev</button>
                 {
                     btns.map((btn,idx) => {
