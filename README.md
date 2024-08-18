@@ -21,7 +21,7 @@ This is the frontend repository for a fullstack MERN-based single-page website t
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/frontend-repo.git
+   git clone https://github.com/Musfique55/products-filteration.git
    cd frontend-repo
 2. **Install Dependencies**
    ```bash
