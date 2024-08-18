@@ -25,4 +25,19 @@ This is the frontend repository for a fullstack MERN-based single-page website t
    git clone https://github.com/yourusername/frontend-repo.git
    cd frontend-repo
 2. **Install Dependencies**
-   npm install   
+   ```bash
+   npm install
+3. **Environment Variables**
+Create a .env file in the root directory and add the following variables:
+   ```bash
+   REACT_APP_API_URL=http://localhost:5000/api
+   REACT_APP_FIREBASE_API_KEY=your-firebase-api-key
+   REACT_APP_FIREBASE_AUTH_DOMAIN=your-firebase-auth-domain
+   REACT_APP_FIREBASE_PROJECT_ID=your-firebase-project-id
+4. **Start the Development Server**
+
+   ```bash
+   npm start
+
+
+The app will be available at http://localhost:3000.
