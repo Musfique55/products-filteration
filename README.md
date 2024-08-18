@@ -1,4 +1,4 @@
-# Product Filtering and Sorting Website - Frontend
+# Product Filtering Website - Frontend
 
 ## Overview
 This is the frontend repository for a fullstack MERN-based single-page website that allows users to search, filter, paginate, and sort products. The frontend is built with React.js and interacts with the backend APIs to display and manage product data.
@@ -24,3 +24,5 @@ This is the frontend repository for a fullstack MERN-based single-page website t
    ```bash
    git clone https://github.com/yourusername/frontend-repo.git
    cd frontend-repo
+2. **Install Dependencies**
+   npm install   
