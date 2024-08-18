@@ -52,7 +52,7 @@ const Header = () => {
                     <div className="relative">
                     <form onChange={handleSuggestion} onSubmit={handleSearch} className="flex">
                         <input type="text" placeholder="Search" name="search" className='w-full border  rounded-l-full p-2 focus:outline-none'/>
-                        <button type="submit" className='bg-green-500 p-2 top-0 text-white rounded-r-full'>Search</button>
+                        <button type="submit" className='bg-zinc-800 p-2 font-semibold text-white rounded-r-full'>Search</button>
                     </form>
                     <div className="bg-white absolute z-50 mt-5">
                     {
@@ -82,7 +82,7 @@ const Header = () => {
                         <div className="relative">
                             <form onChange={handleSuggestion} onSubmit={handleSearch} className="flex">
                                 <input type="text" placeholder="Search" name="search" className='w-full border  rounded-l-full p-2 focus:outline-none'/>
-                                <button type="submit" className='bg-green-500 p-2  text-white rounded-r-full'>Search</button>
+                                <button type="submit" className='bg-black p-2 font-semibold text-white rounded-r-full'>Search</button>
                             </form>
                             <div className="bg-white absolute z-50 mt-5">
                             {

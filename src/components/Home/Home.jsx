@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import AxiosPublic from "../../CustomHooks/AxiosPublic";
 import { Link, useLoaderData } from "react-router-dom";
 import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 
 const Home = () => {
     const axiosPublic = AxiosPublic(); 
@@ -152,6 +153,9 @@ const Home = () => {
                 }
                 <button onClick={handleNext}>Next</button>
             </div>
+
+            {/* foooter */}
+            <Footer></Footer>
         </div>
     );
 };
