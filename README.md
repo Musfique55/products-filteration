@@ -4,8 +4,7 @@
 This is the frontend repository for a fullstack MERN-based single-page website that allows users to search, filter, paginate, and sort products. The frontend is built with React.js and interacts with the backend APIs to display and manage product data.
 
 ## Features
-- **Product Display:** View a list of products with their details including name, image, description, price, category, ratings, and creation date.
-- **Search Functionality:** Search for products by name.
+- **Search Functionality:** 
 - **Categorization:** Filter products by brand name, category name, and price range.
 - **Pagination:** Navigate through product pages using pagination controls.
 - **Sorting:** Sort products by price (low to high, high to low) and by date added (newest first).
@@ -28,7 +27,7 @@ This is the frontend repository for a fullstack MERN-based single-page website t
    ```bash
    npm install
 3. **Environment Variables**
-Create a .env file in the root directory and add the following variables:
+   Create a .env file in the root directory and add the following variables:
    ```bash
    REACT_APP_API_URL=http://localhost:5000/api
    REACT_APP_FIREBASE_API_KEY=your-firebase-api-key
@@ -38,6 +37,5 @@ Create a .env file in the root directory and add the following variables:
 
    ```bash
    npm start
-
 
 The app will be available at http://localhost:3000.
