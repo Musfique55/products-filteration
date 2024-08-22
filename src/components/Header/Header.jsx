@@ -1,14 +1,16 @@
 import {  Link, NavLink, useNavigate } from "react-router-dom";
 import AxiosPublic from "../../CustomHooks/AxiosPublic";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 
 const Header = () => {
+    const {user,logout} = useContext(AuthContext);
     const axiosPublic = AxiosPublic(); 
     const navigate = useNavigate();
     const [suggestions,setSuggestions] = useState([]);
     const [values,setValues] = useState('');
-
+    console.log(user);
     const handleSearch = (e) => {
         e.preventDefault();
         const item = e.target.search.value;
@@ -31,6 +33,10 @@ const Header = () => {
         }
     }
 
+    const handleLogout = () => {
+        logout();
+        
+    } 
     
     return (
         <div>
@@ -43,28 +49,27 @@ const Header = () => {
                     {/* desktop menu */}
                     <div className="flex gap-6">
                         
-                        <NavLink to='https://www.youtube.com/watch?v=PFkzyLHiEPw&embeds_referring_euri=https%3A%2F%2Fworkscout.in%2F&source_ve_path=Mjg2NjQsMjg2NjY&feature=emb_logo'>
-                            Watch Demo
-                        </NavLink>
-                        
+                        <div className="relative">
+                        <form onChange={handleSuggestion} onSubmit={handleSearch} className="flex">
+                            <input type="text" placeholder="Search" name="search" className='w-full border  rounded-l-full p-2 focus:outline-none'/>
+                            <button type="submit" className='bg-zinc-800 p-2 font-semibold text-white rounded-r-full'>Search</button>
+                        </form>
+                        <div className="bg-white absolute z-50 mt-5">
+                        {
+                            values && suggestions?.map(({productName,_id}) => {
+                                return <Link  key={_id}>
+                                <div className='bg-white px-5 pt-5 z-50' >
+                                <p  className='text-lg font-medium text-black border-b bg-white pb-5 z-50'>{productName}</p>
+                            </div>
+                            </Link>
+                            })
+                        }
+                        </div>
+                        </div>
                     
                     </div>
-                    <div className="relative">
-                    <form onChange={handleSuggestion} onSubmit={handleSearch} className="flex">
-                        <input type="text" placeholder="Search" name="search" className='w-full border  rounded-l-full p-2 focus:outline-none'/>
-                        <button type="submit" className='bg-zinc-800 p-2 font-semibold text-white rounded-r-full'>Search</button>
-                    </form>
-                    <div className="bg-white absolute z-50 mt-5">
-                    {
-                        values && suggestions?.map(({productName,_id}) => {
-                            return <Link  key={_id}>
-                            <div className='bg-white px-5 pt-5 z-50' >
-                            <p  className='text-lg font-medium text-black border-b bg-white pb-5 z-50'>{productName}</p>
-                        </div>
-                        </Link>
-                        })
-                    }
-                    </div>
+                    <div>
+                        {user?.email ? <button className="bg-zinc-800 font-medium px-4 py-2 rounded-lg text-white" onClick={handleLogout}>Logout</button> : <p>Login</p>}
                     </div>
                 </div>
                

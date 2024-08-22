@@ -7,7 +7,8 @@ import AuthProvider from './AuthProvider/AuthProvider.jsx'
 import Login from './components/Login/Login.jsx'
 import Layout from './Layout/Layout.jsx';
 import Home from './components/Home/Home.jsx'
-import SearchPage from './components/SearchPage/SearchPage.jsx'
+import SearchPage from './components/SearchPage/SearchPage.jsx';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx'
 const router = createBrowserRouter([
   {
     path : '/',
@@ -15,8 +16,8 @@ const router = createBrowserRouter([
     children : [
       {
         path : '/',
-        element  : <Home></Home>,
-        loader : () =>  fetch('http://localhost:3000/products-count')
+        element  : <PrivateRoute><Home></Home></PrivateRoute>,
+        loader : () =>  fetch('https://product-filteration-server.vercel.app/products-count')
       },
       {
         path : '/login',
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
       {
         path : '/search/:id',
         element : <SearchPage></SearchPage>,
-        loader : ({params}) => fetch(`http://localhost:3000/search/${params.id}`)
+        loader : ({params}) => fetch(`https://product-filteration-server.vercel.app/search/${params.id}`)
       }
     ]
   }
