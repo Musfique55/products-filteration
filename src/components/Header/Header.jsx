@@ -10,7 +10,6 @@ const Header = () => {
     const navigate = useNavigate();
     const [suggestions,setSuggestions] = useState([]);
     const [values,setValues] = useState('');
-    console.log(user);
     const handleSearch = (e) => {
         e.preventDefault();
         const item = e.target.search.value;

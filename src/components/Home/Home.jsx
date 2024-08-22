@@ -18,7 +18,7 @@ const Home = () => {
     const {count} = useLoaderData();
     const [currentItem,setCurrentItem] = useState([]);
     const productPerPage =  10;
-    const totalPage = count / productPerPage;
+    const totalPage = Math.ceil(count / productPerPage);
     const btns = [...Array(totalPage).keys()];
     
     
